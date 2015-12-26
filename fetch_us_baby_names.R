@@ -13,7 +13,7 @@ remDr$setWindowSize(width=856,height=663)
 remDr
 
 # For years:
-#if(file.exists("output/all_results.Rda")){load("output/all_results.Rda")}
+if(file.exists("all_results.Rda")){load("all_results.Rda")}
 if(!exists("all_results")){all_results <- data.table()}
 for(i in 2014:1880){
   if(nrow(all_results)>0){
@@ -71,11 +71,11 @@ for(i in 2014:1880){
 
 }
 
-save(all_results,file="output/all_results.Rda")
+save(all_results,file="all_results.Rda")
 
 us_baby_names <- copy(all_results)
 us_baby_names[,Percent:=as.numeric(str_replace_all(Percent,"%","")),]
 us_baby_names[,Rank:=as.numeric(Rank),]
 
 
-save(us_baby_names,file="output/us_baby_names.Rda")
+save(us_baby_names,file="us_baby_names.Rda")
