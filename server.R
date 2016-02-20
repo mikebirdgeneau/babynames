@@ -12,7 +12,7 @@ library(ggplot2)
 library(stringdist)
 
 shinyServer(function(input, output) {
-
+  
   output$nameWC <- renderPlot({
     message(input$gender)
     
@@ -36,10 +36,10 @@ shinyServer(function(input, output) {
     input$clusNum
     input$rankFilter
     isolate({
-    getCluster(gender = input$gender,k = input$clusNum,maxRank = as.numeric(input$rankFilter))
+      getCluster(gender = input$gender,k = input$clusNum,maxRank = as.numeric(input$rankFilter))
     })
   })
-
+  
   
   output$clusterPlot <- renderPlot({
     plotData<-getClusterData()
@@ -52,15 +52,15 @@ shinyServer(function(input, output) {
     input$goRandom
     
     isolate({
-    temp <- us_baby_names[Gender == input$gender & Rank<= input$rankFilter,]
-    return(temp[sample(x = 1:nrow(temp),size = 1),])
+      temp <- us_baby_names[Gender == input$gender & Rank<= input$rankFilter,]
+      return(temp[sample(x = 1:nrow(temp),size = 1),])
     })
   })
   
   output$randName <- renderUI({
     fluidRow(
       column(6,
-        h2(getRandomName()$Name)     
+             h2(getRandomName()$Name)     
       )
     )
     
@@ -68,11 +68,13 @@ shinyServer(function(input, output) {
   
   output$similarNames <- renderPlot({
     input$trendName
-    isolate({
-      namelist <- tolower(us_baby_names[Gender==input$gender,]$Name)
-    namedist <- stringdist(tolower(input$trendName),tolower(namelist),method="osa")
-    wordcloud(unique(namelist[namedist<=1]),colors = brewer.pal(n = 9,ifelse(input$gender=="Boy","GnBu","PuRd")),min.freq = 0,max.words = 90,scale=c(3,0.3))
-    })
+    if(length(input$trendName)>1){
+      isolate({
+        namelist <- tolower(us_baby_names[Gender==input$gender,]$Name)
+        namedist <- stringdist(tolower(input$trendName),tolower(namelist),method="osa")
+        wordcloud(unique(namelist[namedist<=1]),colors = brewer.pal(n = 9,ifelse(input$gender=="Boy","GnBu","PuRd")),min.freq = 0,max.words = 90,scale=c(3,0.3))
+      })
+    }
   })
   
 })

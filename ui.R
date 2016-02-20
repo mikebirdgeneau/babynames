@@ -52,7 +52,8 @@ shinyUI(
         )
       ),
       fluidRow(
-        column(4,
+        column(6,
+               h4("Similar Names:"),
                plotOutput("similarNames")
                )
       )
