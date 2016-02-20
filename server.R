@@ -9,6 +9,7 @@ library(wordcloud)
 library(RColorBrewer)
 library(data.table)
 library(ggplot2)
+library(stringdist)
 
 shinyServer(function(input, output) {
 
@@ -63,6 +64,15 @@ shinyServer(function(input, output) {
       )
     )
     
+  })
+  
+  output$similarNames <- renderPlot({
+    input$trendName
+    isolate({
+      namelist <- tolower(us_baby_names[Gender==input$gender,]$Name)
+    namedist <- stringdist(tolower(input$trendName),tolower(namelist),method="osa")
+    wordcloud(unique(namelist[namedist<=1]),colors = brewer.pal(n = 9,ifelse(input$gender=="Boy","GnBu","PuRd")),min.freq = 0,max.words = 90,scale=c(3,0.3))
+    })
   })
   
 })

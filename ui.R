@@ -50,24 +50,29 @@ shinyUI(
         column(12,
                plotOutput("clusterPlot")
         )
-      )
-    ),
-    tabPanel(
-      title="Name List",
-      titlePanel("List"),
-      fluidRow(
-        column(12,
-               wellPanel(
-                 
-               )
-        )
       ),
       fluidRow(
-        column(12, 
-               p("Listing Here!")
+        column(4,
+               plotOutput("similarNames")
                )
       )
     ),
+    #tabPanel(
+    #  title="Name List",
+    #  titlePanel("List"),
+    #  fluidRow(
+    #    column(12,
+    #           wellPanel(
+    #             
+    #           )
+    #    )
+    #  ),
+    #  fluidRow(
+    #    column(12, 
+    #           p("Listing Here!")
+    #           )
+    #  )
+    #),
     tabPanel(
       title="Random Names",
       titlePanel("Random Name Generator"),
@@ -83,6 +88,15 @@ shinyUI(
           uiOutput("randName")
         )
       )
-    )
+    )#,
+    #tabPanel(
+    #  title="Potential Names",
+    #  titlePanel("Permutations of Potential Names"),
+    #  fluidRow(
+    #    column(12,
+    #           p("Something here")
+    #           )
+    #  )
+    #)
   )
 )
